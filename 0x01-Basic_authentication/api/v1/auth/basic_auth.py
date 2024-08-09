@@ -3,7 +3,8 @@
 Basic Auth module
 """
 from api.v1.auth.auth import Auth
-
+import binascii
+import base64
 
 class BasicAuth(Auth):
     """Basic Auth class"""
@@ -28,7 +29,8 @@ class BasicAuth(Auth):
             return None
 
         try:
-            decoded_bytes = base64.b64decode(base64_authorization_header)
-            return decoded_bytes.decode('utf-8')
+            decoded = base64.b64decode(base64_authorization_header)
+            decoded_str = decoded.decode('utf-8')
+            return decoded
         except Exception as e:
             return None
