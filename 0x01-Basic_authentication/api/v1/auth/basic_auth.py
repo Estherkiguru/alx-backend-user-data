@@ -6,6 +6,7 @@ from api.v1.auth.auth import Auth
 import binascii
 import base64
 
+
 class BasicAuth(Auth):
     """Basic Auth class"""
     def extract_base64_authorization_header(
@@ -31,6 +32,6 @@ class BasicAuth(Auth):
         try:
             decoded = base64.b64decode(base64_authorization_header)
             decoded_str = decoded.decode('utf-8')
-            return decoded
+            return decoded_str
         except Exception as e:
             return None
