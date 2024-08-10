@@ -10,7 +10,7 @@ class Auth:
     """Managed the API authentication."""
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """ returns False - path"""
-        if path is None or excluded_paths is  None:
+        if path is None or excluded_paths is None:
             return True
 
         normalized_path = path.rstrip('/') + '/'
@@ -19,12 +19,14 @@ class Auth:
             normalized_exclusion = exclusion_path.rstrip('/') + '/'
 
             if exclusion_path.endswith('*'):
-                if re.match(f'^{re.escape(normalized_exclusion[:-2])}.*', normalized_path):
+                if re.match(f'^ {re.escape
+                            (normalized_exclusion[:-2])}.*', normalized_path):
                     return False
             else:
                 if normalized_path == normalized_exclusion:
                     return False
         return True
+
     def authorization_header(self, request=None) -> str:
         """Flask object that returns None - request"""
         if request is None:
