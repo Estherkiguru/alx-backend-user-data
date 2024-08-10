@@ -18,9 +18,9 @@ class Auth:
         for exclusion_path in map(lambda x: x.strip(), excluded_paths):
             normalized_exclusion = exclusion_path.rstrip('/') + '/'
 
+            pattern = (f'^ {re.escape(normalized_exclusion[:-2])}.*')
             if exclusion_path.endswith('*'):
-                if re.match(f'^ {re.escape
-                            (normalized_exclusion[:-2])}.*', normalized_path):
+                if re.match(pattern, normalized_path):
                     return False
             else:
                 if normalized_path == normalized_exclusion:
