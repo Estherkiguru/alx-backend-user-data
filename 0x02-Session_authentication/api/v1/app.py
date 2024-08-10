@@ -49,13 +49,17 @@ def forbidden_error(error) -> str:
 def before_request():
     """before requests handler"""
     authorized_path = ['/api/v1/status/',
-                       '/api/v1/unauthorized/', '/api/v1/forbidden/']
+                       '/api/v1/unauthorized/',
+                       '/api/v1/forbidden/',
+                       '/api/v1/auth_session/login/']
 
     if auth and auth.require_auth(request.path, authorized_path):
         if not auth.authorization_header(request):
             abort(401)
         if not auth.current_user(request):
             abort(403)
+        if not auth.session_cookie(request):
+            abort(401)
         request.current_user = auth.current_user(request)
 
 
