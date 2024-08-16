@@ -7,8 +7,8 @@ from auth import Auth
 app = Flask(__name__)
 #auth = Auth()
 
-@app.route("/"), methods=["GET"]
-def home():
+@app.route("/", methods=["GET"], strict_slashes=False)
+def home() -> str:
     """basic Flask app"""
     return jsonify({"message": "Bienvenue"})
 
