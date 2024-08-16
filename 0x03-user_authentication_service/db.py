@@ -1,17 +1,14 @@
 #!/usr/bin/env python3
 """DB module
 """
+import logging
 
-from typing import Dict
-from sqlalchemy.exc import NoResultFound, InvalidRequestError
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
-from user import Base, User
-import logging
 
-logging.getLogger('sqlalchemy.engine').setLevel(logging.CRITICAL)
+from user import Base, User
 
 
 class DB:
@@ -46,17 +43,3 @@ class DB:
             self._session.rollback()
             raise
         return new_user
-
-    def find_user_by(self, **kwargs: Dict[str, str]) -> User:
-        """
-        Takes arbitrary keyword arguments
-        returns:first row in users table
-        """
-        session = self._session
-        try:
-            user = session.query(User).filter_by(**kwargs).one()
-        except NoResultFound:
-            raise NoResultFound()
-        except InvalidRequestError:
-            raise InvalidRequestError()
-        return user
